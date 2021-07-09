@@ -2,7 +2,7 @@ body {
   background-color: #faf8ef;
   display: flex;
   justify-content: center;
-  font-family: "Clear Sans", "Helvetica Neue"
+  font-family: "Clear Sans", "Helvetica Neue";
 }
 
 .container {
@@ -19,7 +19,7 @@ body {
 .info__title {
   font-size: 80px;
   line-height: 1.1;
-  color: #776E65;
+  color: #776e65;
   margin: 0px;
 }
 
@@ -29,7 +29,7 @@ body {
   height: 60px;
   border-radius: 3px;
   background-color: #8f7a66;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .score__title {
@@ -45,8 +45,8 @@ body {
   flex-wrap: wrap;
   height: 464px;
   width: 464px;
-  background-color: #BBADA0;
-  border: 7px solid #BBADA0;
+  background-color: #bbada0;
+  border: 7px solid #bbada0;
   border-radius: 6px;
   margin-top: 20px;
 }
@@ -59,10 +59,14 @@ body {
   text-align: center;
   font-weight: bold;
   border-radius: 3px;
-  background-color: #EEE4DA;
+  background-color: #eee4da;
   color: #afa192;
   font-weight: bold;
   text-align: center;
-  font-size: 60px;
-  line-height: 1.6;
+  font-size: 45px;
+  line-height: 2.2;
+}
+
+#result {
+  height: 19px;
 }

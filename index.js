@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const scoreDisplay = document.querySelector("#score__points");
   const resultDisplay = document.querySelector("#result");
 
+  let isOver = false;
+
   //Numbers of columns
   const width = 4;
   //Save the generated squares into an array
@@ -114,8 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
       //Save the current column
       let totalOne = squares[i].innerHTML;
       let totalTwo = squares[i + width].innerHTML;
-      let totalThree = squares[i + (width * 2)].innerHTML;
-      let totalFour = squares[i + (width * 3)].innerHTML;
+      let totalThree = squares[i + width * 2].innerHTML;
+      let totalFour = squares[i + width * 3].innerHTML;
       let column = [
         parseInt(totalOne),
         parseInt(totalTwo),
@@ -124,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ];
 
       //Get the numbers distinct from 0
-      let filteredColumn = column.filter(num => num);
+      let filteredColumn = column.filter((num) => num);
 
       //Crate an array with zeros which length is based on the row size minus the filtered numbers
       let miss = 4 - filteredColumn.length;
@@ -136,8 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
       //Render the new orden into the game grid
       squares[i].innerHTML = newColumn[0];
       squares[i + width].innerHTML = newColumn[1];
-      squares[i + (width * 2)].innerHTML = newColumn[2];
-      squares[i + (width * 3)].innerHTML = newColumn[3];
+      squares[i + width * 2].innerHTML = newColumn[2];
+      squares[i + width * 3].innerHTML = newColumn[3];
     }
   }
 
@@ -147,8 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
       //Save the current column
       let totalOne = squares[i].innerHTML;
       let totalTwo = squares[i + width].innerHTML;
-      let totalThree = squares[i + (width * 2)].innerHTML;
-      let totalFour = squares[i + (width * 3)].innerHTML;
+      let totalThree = squares[i + width * 2].innerHTML;
+      let totalFour = squares[i + width * 3].innerHTML;
       let column = [
         parseInt(totalOne),
         parseInt(totalTwo),
@@ -157,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ];
 
       //Get the numbers distinct from 0
-      let filteredColumn = column.filter(num => num);
+      let filteredColumn = column.filter((num) => num);
 
       //Crate an array with zeros which length is based on the row size minus the filtered numbers
       let miss = 4 - filteredColumn.length;
@@ -169,8 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
       //Render the new orden into the game grid
       squares[i].innerHTML = newColumn[0];
       squares[i + width].innerHTML = newColumn[1];
-      squares[i + (width * 2)].innerHTML = newColumn[2];
-      squares[i + (width * 3)].innerHTML = newColumn[3];
+      squares[i + width * 2].innerHTML = newColumn[2];
+      squares[i + width * 3].innerHTML = newColumn[3];
     }
   }
 
@@ -196,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function combineColumn() {
     for (let i = 0; i < 12; i++) {
       //If the value is deeply equal, sum and combine it into the array, and save the second space as 0
-      if (squares[i].innerHTML === squares[i +width].innerHTML) {
+      if (squares[i].innerHTML === squares[i + width].innerHTML) {
         let combinedTotal =
           parseInt(squares[i].innerHTML) +
           parseInt(squares[i + width].innerHTML);
@@ -214,20 +216,23 @@ document.addEventListener("DOMContentLoaded", () => {
   //Keycodes assignments
   document.addEventListener("keyup", control);
 
+  //Check the keyboard input, if the game still playable, make the move
   function control(e) {
-    switch (e.key) {
-      case "ArrowRight":
-        keyRight();
-        break;
-      case "ArrowLeft":
-        keyLeft();
-        break;
-      case "ArrowUp":
-        keyUp();
-        break;
-      case "ArrowDown":
-        keyDown();
-        break;
+    if (!isOver) {
+      switch (e.key) {
+        case "ArrowRight":
+          keyRight();
+          break;
+        case "ArrowLeft":
+          keyLeft();
+          break;
+        case "ArrowUp":
+          keyUp();
+          break;
+        case "ArrowDown":
+          keyDown();
+          break;
+      }
     }
   }
 
@@ -256,12 +261,14 @@ document.addEventListener("DOMContentLoaded", () => {
     generateNumber();
   }
 
-  //Check for the number 2049 to win
+  //Check for the number 2048 to win
   function checkWin() {
     for (let i = 0; i < squares.length; i++) {
-      if (squares[i].innerHTML == 2048) {
-        resultDisplay.innetHTML = "Winner";
+      if (squares[i].innerHTML >= 2048) {
+        resultDisplay.innerHTML = "Winner";
         document.removeEventListener("keyup", control);
+        isOver = true;
+        alert("YOU WIN");
       }
     }
   }
@@ -278,33 +285,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (zeros === 0) {
       resultDisplay.innerHTML = "Looser";
       document.removeEventListener("keyup", control);
+      isOver = true;
+      alert("YOU LOOSE");
     }
   }
 
-  //clear timer
-  function clear() {
-    clearInterval(timer)
-  }
-  
   //Function to draw the background colors depending on the value on them
   function drawColours() {
-    for (let i=0; i < squares.length; i++) {
-      if (squares[i].innerHTML == 0) squares[i].style.backgroundColor = '#afa192'
-      else if (squares[i].innerHTML == 2) squares[i].style.backgroundColor = '#eee4da'
-      else if (squares[i].innerHTML  == 4) squares[i].style.backgroundColor = '#ede0c8' 
-      else if (squares[i].innerHTML  == 8) squares[i].style.backgroundColor = '#f2b179' 
-      else if (squares[i].innerHTML  == 16) squares[i].style.backgroundColor = '#ffcea4' 
-      else if (squares[i].innerHTML  == 32) squares[i].style.backgroundColor = '#e8c064' 
-      else if (squares[i].innerHTML == 64) squares[i].style.backgroundColor = '#ffab6e' 
-      else if (squares[i].innerHTML == 128) squares[i].style.backgroundColor = '#fd9982' 
-      else if (squares[i].innerHTML == 256) squares[i].style.backgroundColor = '#ead79c' 
-      else if (squares[i].innerHTML == 512) squares[i].style.backgroundColor = '#76daff' 
-      else if (squares[i].innerHTML == 1024) squares[i].style.backgroundColor = '#beeaa5' 
-      else if (squares[i].innerHTML == 2048) squares[i].style.backgroundColor = '#d7d4f0' 
+    for (let i = 0; i < squares.length; i++) {
+      if (squares[i].innerHTML == 0)
+        squares[i].style.backgroundColor = "#afa192";
+      else if (squares[i].innerHTML == 2)
+        squares[i].style.backgroundColor = "#eee4da";
+      else if (squares[i].innerHTML == 4)
+        squares[i].style.backgroundColor = "#ede0c8";
+      else if (squares[i].innerHTML == 8)
+        squares[i].style.backgroundColor = "#f2b179";
+      else if (squares[i].innerHTML == 16)
+        squares[i].style.backgroundColor = "#ffcea4";
+      else if (squares[i].innerHTML == 32)
+        squares[i].style.backgroundColor = "#e8c064";
+      else if (squares[i].innerHTML == 64)
+        squares[i].style.backgroundColor = "#ffab6e";
+      else if (squares[i].innerHTML == 128)
+        squares[i].style.backgroundColor = "#fd9982";
+      else if (squares[i].innerHTML == 256)
+        squares[i].style.backgroundColor = "#ead79c";
+      else if (squares[i].innerHTML == 512)
+        squares[i].style.backgroundColor = "#76daff";
+      else if (squares[i].innerHTML == 1024)
+        squares[i].style.backgroundColor = "#beeaa5";
+      else if (squares[i].innerHTML == 2048)
+        squares[i].style.backgroundColor = "#d7d4f0";
     }
   }
 
-  drawColours()
-  var timer = setInterval(drawColours, 50)
-
+  drawColours();
 });
