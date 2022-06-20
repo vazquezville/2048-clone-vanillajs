@@ -290,6 +290,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  //clear timer
+  function clear() {
+    clearInterval(timer);
+  }
+
   //Function to draw the background colors depending on the value on them
   function drawColours() {
     for (let i = 0; i < squares.length; i++) {
@@ -321,4 +326,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   drawColours();
+  var timer = setInterval(drawColours, 50);
 });
